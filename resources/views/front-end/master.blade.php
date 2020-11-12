@@ -9,6 +9,7 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/cart.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Google Fonts -->
@@ -17,32 +18,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript">
-        $(function() {
-            var pull = $('#pull');
-            menu = $('nav ul');
-            menuHeight = menu.height();
 
-            $(pull).on('click', function(e) {
-                e.preventDefault();
-                menu.slideToggle();
-            });
-        });
-
-        $(window).resize(function() {
-            var w = $(window).width();
-            if (w > 320 && menu.is(':hidden')) {
-                menu.removeAttr('style');
-            }
-        });
-    </script>
 </head>
 
 <body>
+
     <div class="">
     </div>
     <!-- header -->
@@ -83,8 +64,12 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" style="display: grid"><i style="font-size: 32px" class="fa fa-cart-plus" aria-hidden="true"></i>
-                                Giỏ Hàng</a>
+                            <a class="nav-link" href="{{asset('/cart')}}" style="display: grid">
+                                <div>
+                                    <i style="font-size: 24px" class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    {{Cart::getTotalQuantity()}}
+                                </div>
+                                 Giỏ Hàng</a>
                         </li>
                     </ul>
                     <!-- Links -->
@@ -170,7 +155,7 @@
                         </div>
                     </div>
 
-                    <div id="banner-t" class="text-center">
+                    <div id="banner-t pb-4" class="text-center">
                         <div class="row">
                             <div class="banner-t-item col-md-6 col-sm-12 col-xs-12">
                                 <a href="#"><img src="img/home/banner-t-1.png" alt="" class="img-thumbnail"></a>
@@ -193,7 +178,7 @@
     <!-- footer -->
     <!-- Footer -->
     <footer class="page-footer font-small bg-primary pt-4">
-    
+
         <!-- Footer Text -->
         <div class="container text-center text-md-left">
 
@@ -244,6 +229,28 @@
 
     </footer>
     <!-- Footer -->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var pull = $('#pull');
+            menu = $('nav ul');
+            menuHeight = menu.height();
+
+            $(pull).on('click', function(e) {
+                e.preventDefault();
+                menu.slideToggle();
+            });
+        });
+
+        $(window).resize(function() {
+            var w = $(window).width();
+            if (w > 320 && menu.is(':hidden')) {
+                menu.removeAttr('style');
+            }
+        });
+    </script>
 </body>
 
 </html>

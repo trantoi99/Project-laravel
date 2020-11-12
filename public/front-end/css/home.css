@@ -4,9 +4,9 @@
 }
 
 body {
-    font-family: arial;
+    font-family: arial !important;
     font-size: 14px;
-    color: #666;
+    color: #ffff;
 }
 
 h1,
@@ -60,7 +60,7 @@ p {
     background: #fff;
     padding: 0 15px;
     border: none;
-    color: #ff9600;
+    color: #4285f4;
     font-size: 12px;
 }
 
@@ -175,7 +175,7 @@ padding-left: 12px;
 .products h3 {
     margin-top: 15px;
     font-size: 18px;
-    color: #ff9600;
+    color: white;
     text-transform: uppercase;
 }
 
@@ -237,7 +237,7 @@ padding-left: 12px;
 }
 
 #footer-t {
-    background: #FF9600;
+    background: #4285f4;
     color: #fff;
     padding: 15px 0 0 0;
 }
@@ -338,7 +338,7 @@ nav a#pull {
     nav a#pull {
         display: block;
         float: left;
-        /* background-color: #ff9600; */
+        /* background-color: #4285f4; */
         /* width: 100%; */
         position: absolute;
         top: 50%;

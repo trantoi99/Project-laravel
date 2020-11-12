@@ -2,22 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use Cart;
-use App\Models;
 use App\Models\Product;
+use DB;
+use App\Models\Brand;
+use App\Models\Category;
+use Darryldecode\Cart\Cart as CartCart;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    //
-    public function addToCart($id){
-        $product = Product::where('id_sp','=',$id)->frst();
-        Cart::add(['id' => $id, 'name' => $product->ten_sp, 'qty' => 1, 'price' => $product->prod_price, ]);
-        return redirect('cart/show');
+
+    public function add($id)
+    {
+        // add the product to cart
+        $product = DB::table('sanpham')->where('id_sp','=',$id)->first();
+        Cart::add(array(
+            'id' => $product->id_sp,
+            'name' => $product->ten_sp,
+            'price' => $product->prod_price,
+            'quantity' => 1,
+            'attributes' => array(),
+            'associatedModel' => $product
+        ));
+        return redirect()->route('cart.index');
     }
-    public function getShowCart(){
-        $total=Cart::total();
-        $data = Cart::content();
-        return view('cart')->with(['data'=>$data],['totla'=>$total]);
+
+    public function index()
+    {
+        $cartItems = Cart::getContent();
+        $brand = Brand::all();
+        $category = Category::all();
+        /*$total = Cart::getTotal();*/
+        return view('front-end.cart')->with(['cartItems'=>$cartItems, 'brand' => $brand,'category'=>$category]);
+    }
+
+    public function destroy($id)
+    {
+       Cart::remove($id);
+        return back();
+    }
+    public function update(Request $request)
+    {
+        Cart::update($request->id, array(
+            'quantity' => array(
+                'relative' => false,
+                'value' => $request->quantity
+            ),
+        ));
+
+        return back();
+    }
+    public function getCheckOut(){
+        $brand = Brand::all();
+        $category = Category::all();
+        return view('front-end.checkOut')->with(['brand' => $brand])->with(['category' => $category]);
     }
 }

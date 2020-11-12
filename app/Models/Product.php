@@ -30,4 +30,7 @@ class Product extends Model
     public function categories(){
         return $this->belongsTo(Category::class);
     }
+    public function special_product(){
+        return $this->belongsTo(SpecialProduct::class);
+    }
 }

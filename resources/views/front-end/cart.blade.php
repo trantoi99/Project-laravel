@@ -7,67 +7,93 @@
                             <h3>Giỏ hàng</h3>
                             <form>
                                 <table class="table table-bordered .table-responsive text-center">
-                                    <tr class="active">
+                                    <tr>
                                         <td width="11.111%">Ảnh mô tả</td>
                                         <td width="22.222%">Tên sản phẩm</td>
-                                        <td width="22.222%">Số lượng</td>
+                                        <td width="16.6665%">Số lượng</td>
                                         <td width="16.6665%">Đơn giá</td>
                                         <td width="16.6665%">Thành tiền</td>
-                                        <td width="11.112%">Xóa</td>
+                                        <td width="16.6665%">Cập Nhập</td>
                                     </tr>
-                                    @foreach($data as $item)
+                                    @foreach($cartItems as $item)
                                     <tr>
                                         <td><img class="img-responsive" src="img/home/product-1.png"></td>
                                         <td>{{$item->name}}</td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input class="form-control" type="number" value ={{$item->qty}}>
+                                        <td class="text-center">
+                                            <div class="quantity_group justify-content-center">
+                                                <button type="button" class="minus" onclick="decreaseValue()"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                <input class="text" name="quantity" type="number" value ="{{$item->quantity}}" min= "0" id="theInput" >
+                                                <button type="button" class="plus" onclick="increaseValue()"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                             </div>
                                         </td>
-                                    <td><span class="price">{{number_format($tem->price,0,',','.')}}</span></td>
-                                        <td><span class="price">{{number_format($tem->price*$item->qty,0,',','.')}}</span></td>
-                                        <td><a href="#">Xóa</a></td>
+                                        <td><span class="price">{{number_format($item->price,0,',','.')}} VNĐ</span></td>
+                                        <td><span class="price">{{number_format($item->price*$item->quantity,0,',','.')}} VNĐ</span></td>
+                                        <td>
+                                            <a class="text-success pr-2" href="{{route('cart.update',$item->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                            <a class="text-danger" href="{{route('cart.destroy',$item->id)}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
                                     </tr>
                                     @endforeach()
                                 </table>
-                                <div class="row" id="total-price">
-                                    <div class="col-md-6 col-sm-12 col-xs-12">
-                                    Tổng thanh toán: <span class="total-price">{{$total}}</span>
+                                <div class="row  justify-content-center" id="total-price">
 
-                                    </div>
-                                    <div class="col-md-6 col-sm-12 col-xs-12">
-                                        <a href="#" class="my-btn btn">Mua tiếp</a>
-                                        <a href="#" class="my-btn btn">Cập nhật</a>
-                                        <a href="#" class="my-btn btn">Xóa giỏ hàng</a>
-                                    </div>
+                                        <a href="{{asset('/checkout')}}" class="btn btn-success btn-lg mr-2">Thanh Toán</a>
+
+                                        <a href="{{'/'}}" class="btn btn-lg bg-primary text-white">Mua tiếp</a>
+
+                                </div>
+                                <div class="row">
+
                                 </div>
                             </form>
                         </div>
 
-                        <div id="xac-nhan">
-                            <h3>Xác nhận mua hàng</h3>
-                            <form>
-                                <div class="form-group">
-                                    <label for="email">Email address:</label>
-                                    <input required type="email" class="form-control" id="email" name="email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">Họ và tên:</label>
-                                    <input required type="text" class="form-control" id="name" name="name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Số điện thoại:</label>
-                                    <input required type="number" class="form-control" id="phone" name="phone">
-                                </div>
-                                <div class="form-group">
-                                    <label for="add">Địa chỉ:</label>
-                                    <input required type="text" class="form-control" id="add" name="add">
-                                </div>
-                                <div class="form-group text-right">
-                                    <button type="submit" class="btn btn-default">Thực hiện đơn hàng</button>
-                                </div>
-                            </form>
+                        <div>
                         </div>
+
                     </div>
+<script>
+$(document).ready(function(){
+    $("#theInput").bind("keypress", function(e){
+        var keyCode = e.which ? e.which : e.keyCode;
 
+        if(!(keyCode >= 48 && keyCode <= 57)){
+            return false;
+        }
+        else{
+            return true;
+        }
+    });
+
+
+});
+
+function updateCart(id){
+    $.get('/cart/update/' + id).then(function(data){
+        if(data != null){
+            $("#theInput").val(data);
+        }
+        else{
+            alert('Error');
+        }
+    }).catch(error => alert(error.message));
+};
+
+function increaseValue() {
+    var value = parseInt(document.getElementById('theInput').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value++;
+    document.getElementById('theInput').value = value;
+};
+
+function decreaseValue() {
+    var value = parseInt(document.getElementById('theInput').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value < 1 ? value = 1 : '';
+    value--;
+    document.getElementById('theInput').value = value;
+};
+
+</script>
 @stop()
+

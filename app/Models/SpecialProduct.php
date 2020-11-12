@@ -13,4 +13,7 @@ class SpecialProduct extends Model
         'hinhanh_ssp',
     ];
     protected $table = 'sanpham_dacbiet';
+    public function product(){
+        return $this->hasMany(Product::class);
+    }
 }

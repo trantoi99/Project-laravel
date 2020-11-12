@@ -19,7 +19,9 @@ Route::get('detail/{id}.html','HomeController@getDetail');
 Route::get('brand/{id}','HomeController@getBrand');
 Route::get('category/{id}','HomeController@getCategory');
 Route::get('search','HomeController@getSearch');
-Route::group(['prefix' => 'cart'], function () {
-    Route::get('add/{id}','CartController@addToCart');
-    Route::get('show','CartController@getShowCart');
-});
+Route::get('checkout','CartController@getCheckOut');
+Route::get('/add-to-cart/{id}', 'CartController@add')->name('cart.add');
+Route::get('/cart', 'CartController@index')->name('cart.index');
+Route::get('/cart/destroy/{id}', 'CartController@destroy')->name('cart.destroy');
+Route::get('/cart/update', 'CartController@update')->name('cart.update');
+

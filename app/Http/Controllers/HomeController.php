@@ -11,28 +11,28 @@ use App\Models\SpecialProduct;
 use App\Models\Comment;
 use Exception;
 use Mail;
+use Cart;
 class HomeController extends Controller
 {
     // get home page
     public function getHome(){
         //get sp dac biet
-        /*
+
         $data = Product::join('sanpham_dacbiet', 'sanpham.id_sp', '=', 'sanpham_dacbiet.id_sp')
                         ->select(['sanpham.*', 'sanpham_dacbiet.id_ssp'])
-                        ->get();
-        dd($data);
-        */
+                        ->paginate(6);
         // get list sản phẩm
         $lst_product = Product::orderBy('id_sp','asc')->paginate(6);
-        // get list brand 
+        // get list brand
         $brand = Brand::all();
         //get list category
         $category = Category::all();
-        return view('front-end.home')->with(['lst_product' => $lst_product])->with(['brand' => $brand])->with(['category' => $category]);
+        return view('front-end.home')->with(['lst_product' => $lst_product])->with(['brand' => $brand])->with(['category' => $category])->with(['data' => $data]);
     }
 
     // get detail page
     public function getDetail($id){
+       // $value = Product::find($id);
         $value = DB::table('sanpham')->where('id_sp', $id)->first();
         $brand = Brand::all();
         $category = Category::all();
@@ -73,16 +73,15 @@ class HomeController extends Controller
         $item = DB::table('sanpham')->where('ten_sp','like','%'.$result.'%')->get();
         return view('front-end.search')->with(['keywords' =>$result,'item'=>$item, 'brand' => $brand,'category'=>$category]);
     }
-   
 
     /*public function sendEmail(Request $request)
     {
         $request->validate([
-          'email' => 'required|email',       
+          'email' => 'required|email',
         ]);
 
         $data = [
-          'subject' => 
+          'subject' =>
           'email' => $request->email,
           'content' => $request->content
         ];
@@ -95,5 +94,5 @@ class HomeController extends Controller
         return back()->with(['message' => 'Email successfully sent!']);
     }*/
 
-    
+
 }

@@ -48,6 +48,75 @@ body {
     font-size: 12px;
 }
 
+.quantity_group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 64px;
+    background-color: #ffffff;
+    padding: 10px 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #000000;
+}
+
+.text {
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 2px;
+    color: #000000;
+}
+
+input {
+    text-align: center;
+    width: 32px;
+    background-color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #000000;
+    outline: none;
+}
+
+[type=number] {
+    border: none;
+    appearance: none;
+    appearance: textfield;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    outline: none;
+    outline: none !important;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.minus,
+.plus {
+    border: none;
+    background: white;
+    outline: none;
+    background-color: #ffffff;
+}
+
+.quantity_group i {
+    opacity: 0.5;
+}
+
 @media (min-width: 768px) {
     .navbar-form .input-group .form-control,
     .navbar-form .input-group .input-group-btn {
