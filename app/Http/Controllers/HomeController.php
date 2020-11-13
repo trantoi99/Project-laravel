@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Brand;
@@ -10,8 +9,8 @@ use App\Models\Product;
 use App\Models\SpecialProduct;
 use App\Models\Comment;
 use Exception;
-use Mail;
-use Cart;
+use Illuminate\Support\Facades\DB;
+
 class HomeController extends Controller
 {
     // get home page
@@ -36,7 +35,8 @@ class HomeController extends Controller
         $value = DB::table('sanpham')->where('id_sp', $id)->first();
         $brand = Brand::all();
         $category = Category::all();
-        return view('front-end.details')->with(['value' => $value])->with(['brand' => $brand])->with(['category' => $category]);
+        return view('front-end.details')->with(['value' => $value])->with(['brand' => $brand])
+        ->with(['category' => $category]);
     }
 
     // get brand
