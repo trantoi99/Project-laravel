@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
-use Cart;
-use App\Models\Product;
-use DB;
 use App\Models\Brand;
 use App\Models\Category;
-use Darryldecode\Cart\Cart as CartCart;
+use Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -41,7 +38,7 @@ class CartController extends Controller
     public function destroy($id)
     {
        Cart::remove($id);
-        return back();
+        return response()->json(['id' => $id]);
     }
     public function update(Request $request)
     {
@@ -52,7 +49,9 @@ class CartController extends Controller
             ),
         ));
 
-        return back();
+        $total = $request->quantity * $request->price;
+
+        return response()->json(['id' => $request->id, 'quantity' => $request->quantity, 'total' => $total]);
     }
     public function getCheckOut(){
         $brand = Brand::all();
