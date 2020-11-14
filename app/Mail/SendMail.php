@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,16 +13,30 @@ trait SendMail
 {
     public function send_mail($mail)
     {
-        $result = file_get_contents(base_path('public\sendmail\sendmail.html'));
-
+        $temp = file_get_contents(base_path('public\sendmail\sendmail.html'));
         
+        $search = [
+            '{{ name }}',
+            '{{ phone_number }}',
+            '{{ address }}',
+            '{{ total }}'
+        ];
+        
+        $replace = [
+            $mail['tenKH'],
+            $mail['sodienthoai'],
+            $mail['diachi'],
+            $mail['tongtien']
+        ];
+
+        $result = str_replace($search, $replace, $temp);
         try{
             $body = [
                 'Messages' => [
                     [
                     'From' => [
-                        'Email' => env('tranhungtoi308@gmail.com'),
-                        'Name' => env('Default')
+                        'Email' => 'tranhungtoi308@gmail.com',
+                        'Name' => 'Default'
                     ],
                     'To' => [
                         [
@@ -37,12 +52,12 @@ trait SendMail
         
             $client = new Client([
                 // Base URI is used with relative requests
-                'base_uri' => env('MAIL_JET_BASE_URI'),
+                'base_uri' => 'https://api.mailjet.com/v3.1/',
             ]);
         
             $response = $client->request('POST', 'send', [
                 'json' => $body,
-                'auth' => [env('MAIL_JET_API_KEY'), env('MAIL_JET_SECRET')]
+                'auth' => ['18e6329ab1a135b903b2665af2d024aa', 'a5379683c8069f067d4f512fad4aaf3a']
             ]);
         
             if($response->getStatusCode() == 200) {
