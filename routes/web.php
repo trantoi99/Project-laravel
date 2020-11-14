@@ -24,4 +24,6 @@ Route::get('/add-to-cart/{id}', 'CartController@add')->name('cart.add');
 Route::get('/cart', 'CartController@index')->name('cart.index');
 Route::get('/cart/destroy/{id}', 'CartController@destroy')->name('cart.destroy');
 Route::get('/cart/update', 'CartController@update')->name('cart.update');
+Route::post('/cart/save', 'CartController@save_cart')->name('cart.save_cart');
+
 
